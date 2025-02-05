@@ -9,7 +9,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script type="text/javascript"src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">emailjs.init('aNnTjgEp-VTuLpRIi')</script>
 
     <style>
         body {
@@ -231,17 +232,23 @@
         function cargarDatosModal() {
             // Obtener los valores de presupuesto y descripción
             let presupuesto = document.getElementById("presupuesto").innerText;
-            let descripcion = document.getElementById("descripcion").innerHTML;
+            let descripcionHTML = document.getElementById("descripcion").innerHTML;
 
-            // Obtener las respuestas de las preguntas
+            // Extraer solo el texto de los elementos <li> dentro de <ul> usando una expresión regular
+            let descripcionTexto = descripcionHTML.replace(/<li[^>]*>(.*?)<\/li>/g, '$1').replace(/<ul[^>]*>/g, '').replace(/<\/ul>/g, '');
+
+            // Colocar los valores en el campo "Descripción de la necesidad" en el modal
+            document.getElementById("descripcionModal").value = `
+                <strong>Presupuesto:</strong> ${presupuesto}\n\n
+                <strong>Características Incluidas:</strong>\n${descripcionTexto}
+            `;
+
+            // Crear la tabla con las respuestas
             let colores = document.getElementById("colores") ? document.getElementById("colores").value : "No especificado";
             let tipoPagina = document.getElementById("tipoPagina") ? document.getElementById("tipoPagina").value : "No especificado";
             let responsive = document.getElementById("responsive") ? document.getElementById("responsive").value : "No especificado";
             let dominio = document.getElementById("dominio") ? document.getElementById("dominio").value : "No especificado";
             let db = document.getElementById("db") ? document.getElementById("db").value : "No especificado";
-
-            // Colocar los valores en el campo "Descripción de la necesidad" en el modal
-            document.getElementById("descripcionModal").value = `Presupuesto: ${presupuesto}\n\nCaracterísticas Incluidas:\n${descripcion}`;
 
             // Crear la tabla con las respuestas
             let tablaDetalle = `
@@ -254,23 +261,23 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Cantidad de colores</td>
+                            <td><strong>Cantidad de colores</strong></td>
                             <td>${colores}</td>
                         </tr>
                         <tr>
-                            <td>Tipo de página</td>
+                            <td><strong>Tipo de página</strong></td>
                             <td>${tipoPagina}</td>
                         </tr>
                         <tr>
-                            <td>¿Es responsive?</td>
+                            <td><strong>¿Es responsive?</strong></td>
                             <td>${responsive}</td>
                         </tr>
                         <tr>
-                            <td>¿Dominio personalizado?</td>
+                            <td><strong>¿Dominio personalizado?</strong></td>
                             <td>${dominio}</td>
                         </tr>
                         <tr>
-                            <td>Gestor de base de datos</td>
+                            <td><strong>Gestor de base de datos</strong></td>
                             <td>${db}</td>
                         </tr>
                     </tbody>
@@ -280,7 +287,6 @@
             // Insertar la tabla en el modal debajo del campo de descripción
             document.getElementById("tablaSolicitud").innerHTML = tablaDetalle;
         }
-
 
 
         function calcularPresupuesto() {
@@ -300,76 +306,102 @@
                 if (db === "personalizado") costo += 3000;
 
                 if (responsive === "si" && dominio === "personalizado" && db === "personalizado") {
-                    descripcion = `✅ Mantenimiento de la página por 3 meses sin costo adicional.<br>
-🌐 Dominio y hosting por 1 año (la renovación anual no está incluida después del primer año).<br>
-🔑 Acceso completo a tus datos de hosting y dominio.<br>
-📊 Base de datos personalizada según tus necesidades.<br>
-🎨 Diseño web con las características seleccionadas.<br>
-💰 Descuento en futuras actualizaciones si son requeridas.<br>`;
-                    precioFinal = 6500;
-                      }
+      descripcion = `
+        <ul style="padding-left: 20px; list-style-type: disc;">
+              <li>✅ Mantenimiento de la página por 3 meses sin costo adicional.</li>
+              <li>🌐 Dominio y hosting por 1 año (la renovación anual no está incluida después del primer año).</li>
+              <li>🔑 Acceso completo a tus datos de hosting y dominio.</li>
+              <li>📊 Base de datos personalizada según tus necesidades.</li>
+              <li>🎨 Diseño web con las características seleccionadas.</li>
+              <li>💰 Descuento en futuras actualizaciones si son requeridas.</li>
+          </ul>`;
+      precioFinal = 6500;
+  }
+
                   else  if (responsive === "no" && dominio === "personalizado" && db === "personalizado") {
-                        descripcion = `✅ Mantenimiento de la página por 3 meses sin costo adicional.<br>
-    🌐 Dominio y hosting por 1 año (la renovación anual no está incluida después del primer año).<br>
-    🔑 Acceso completo a tus datos de hosting y dominio.<br>
-    📊 Base de datos personalizada según tus necesidades.<br>
-    🎨 Diseño adaptable: Se creará un sitio web amigable y adaptado a tus necesidades. Se recomienda el uso de Bootstrap para un diseño moderno y responsivo.<br>
-    💰 Descuento en futuras actualizaciones si son requeridas.<br>`;
+                        descripcion = `
+  <ul style="padding-left: 20px; list-style-type: disc;">
+                      <li>✅ Mantenimiento de la página por 3 meses sin costo adicional.</li>
+    <li>🌐 Dominio y hosting por 1 año (la renovación anual no está incluida después del primer año).</li>
+    <li>🔑 Acceso completo a tus datos de hosting y dominio.</li>
+    <li>📊 Base de datos personalizada según tus necesidades.</li>
+    <li>🎨 Diseño adaptable: Se creará un sitio web amigable y adaptado a tus necesidades. Se recomienda el uso de Bootstrap para un diseño moderno y responsivo.</li>
+    <li>💰 Descuento en futuras actualizaciones si son requeridas.</li>
+    </ul>`;
+
                   precioFinal = 5000;
                 }
                 else if (responsive === "si" && dominio === "personalizado" && db === "Gratuito") {
-                      descripcion = `✅ Mantenimiento de la página por 3 meses sin costo adicional.<br>
-                      🌐 Dominio y hosting por 1 año (la renovación anual no está incluida después del primer año).<br>
-                      🔑 Acceso completo a datos.<br>
-                      📊 Base de datos con Correo requerido: Se solicitará una cuenta de Gmail para gestionar la información y construir el sitio. Es esencial brindar acceso a esta cuenta..<br>
-                      🎨 Diseño web con características seleccionadas.<br>
-                      💰 Descuento en futuras actualizaciones.`;
-                      precioFinal = 5000;
-                }
-                else if (responsive === "si" && dominio === "Gratuito" && db === "personalizado") {
-                      descripcion = `✅ Mantenimiento de la página por 3 meses sin costo adicional.<br>
-                      🌐 Dominio gratuito: Se utilizará un dominio con prefijo gratuito, por ejemplo: yourpagename.github.io.<br>
-                      🔑 Acceso completo a datos.<br>
-                      📊 Base de datos con Correo requerido: Se solicitará una cuenta de Gmail para gestionar la información y construir el sitio. Es esencial brindar acceso a esta cuenta..<br>
-                      🎨 Diseño web con características seleccionadas.<br>
-                      💰 Descuento en futuras actualizaciones.`;
-                      precioFinal = 5000;
-                }
-                else if (responsive === "no" && dominio === "Gratuito" && db === "Gratuito"){
-                    descripcion = `📂 Sistema de almacenamiento: Se implementará un sistema gratuito basado en Google Sheets para almacenar la información.<br>
-🌐 Dominio gratuito: Se utilizará un dominio con prefijo gratuito, por ejemplo: yourpagename.github.io.<br>
-📧 Correo requerido: Se solicitará una cuenta de Gmail para gestionar la información y construir el sitio. Es esencial brindar acceso a esta cuenta.<br>
-💾 Espacio adicional: Si se requiere más almacenamiento, se recomienda adquirir espacio adicional en Google Drive de manera mensual.<br>
-📖 Guía de uso: Se proporcionará una explicación detallada sobre cómo las herramientas de Google Apps interactúan con el sitio web.<br>
-🎨 Diseño adaptable: Se creará un sitio web amigable y adaptado a tus necesidades. Se recomienda el uso de Bootstrap para un diseño moderno y responsivo.`;
-                    precioFinal = 1500;
-                }
-                else if (responsive === "si" && dominio === "Gratuito" && db === "Gratuito"){
-                    descripcion = `📂 Sistema de almacenamiento: Se implementará un sistema gratuito basado en Google Sheets para almacenar la información.<br>
-🌐 Dominio gratuito: Se utilizará un dominio con prefijo gratuito, por ejemplo: yourpagename.github.io.<br>
-📧 Correo requerido: Se solicitará una cuenta de Gmail para gestionar la información y construir el sitio. Es esencial brindar acceso a esta cuenta.<br>
-💾 Espacio adicional: Si se requiere más almacenamiento, se recomienda adquirir espacio adicional en Google Drive de manera mensual.<br>
-📖 Guía de uso: Se proporcionará una explicación detallada sobre cómo las herramientas de Google Apps interactúan con el sitio web.<br>
-🎨 Diseño adaptable: Se creará un sitio web amigable y adaptado a tus necesidades.`;
-                    precioFinal = 1850;
-            }
-            else if (responsive === "no" && dominio === "Gratuito" && db === "personalizado"){
-                descripcion = `📂 Sistema de almacenamiento: Se implementará un sistema gratuito basado en Google Sheets para almacenar la información.<br>
-🌐 Dominio gratuito: Se utilizará un dominio con prefijo gratuito, por ejemplo: yourpagename.github.io.<br>
-📊 Base de datos personalizada según tus necesidades.<br>
-💾 Espacio adicional: Si se requiere más almacenamiento, se recomienda adquirir espacio adicional en Google Drive de manera mensual.<br>
-📖 Guía de uso: Se proporcionará una explicación detallada sobre cómo las herramientas de Google Apps interactúan con el sitio web.<br>
-🎨 Diseño adaptable: Se creará un sitio web amigable y adaptado a tus necesidades.`;
-                precioFinal = 2200;
-        }
-        else if (responsive === "no" && dominio === "personalizado" && db === "Gratuito"){
-            descripcion = `📂 Sistema de almacenamiento: Se implementará un sistema gratuito basado en Google Sheets para almacenar la información.<br>
-🌐 Dominio y hosting por 1 año (la renovación anual no está incluida después del primer año).<br>
-📧 Correo requerido: Se solicitará una cuenta de Gmail para gestionar la información y construir el sitio. Es esencial brindar acceso a esta cuenta.<br>
-💾 Espacio adicional: Si se requiere más almacenamiento, se recomienda adquirir espacio adicional en Google Drive de manera mensual.<br>
-📖 Guía de uso: Se proporcionará una explicación detallada sobre cómo las herramientas de Google Apps interactúan con el sitio web.<br>
-🎨 Diseño adaptable: Se creará un sitio web amigable y adaptado a tus necesidades.`;
-            precioFinal = 2200;
+      descripcion = `
+        <ul style="padding-left: 20px; list-style-type: disc;">
+              <li>✅ Mantenimiento de la página por 3 meses sin costo adicional.</li>
+              <li>🌐 Dominio y hosting por 1 año (la renovación anual no está incluida después del primer año).</li>
+              <li>🔑 Acceso completo a datos.</li>
+              <li>📊 Base de datos con Correo requerido: Se solicitará una cuenta de Gmail para gestionar la información y construir el sitio. Es esencial brindar acceso a esta cuenta.</li>
+              <li>🎨 Diseño web con características seleccionadas.</li>
+              <li>💰 Descuento en futuras actualizaciones.</li>
+          </ul>`;
+      precioFinal = 5000;
+  }
+  else if (responsive === "si" && dominio === "Gratuito" && db === "personalizado") {
+      descripcion = `
+            <ul style="padding-left: 20px; list-style-type: disc;">
+              <li>✅ Mantenimiento de la página por 3 meses sin costo adicional.</li>
+              <li>🌐 Dominio gratuito: Se utilizará un dominio con prefijo gratuito, por ejemplo: yourpagename.github.io.</li>
+              <li>🔑 Acceso completo a datos.</li>
+              <li>📊 Base de datos con Correo requerido: Se solicitará una cuenta de Gmail para gestionar la información y construir el sitio. Es esencial brindar acceso a esta cuenta.</li>
+              <li>🎨 Diseño web con características seleccionadas.</li>
+              <li>💰 Descuento en futuras actualizaciones.</li>
+          </ul>`;
+      precioFinal = 5000;
+  }
+  else if (responsive === "no" && dominio === "Gratuito" && db === "Gratuito") {
+      descripcion = `
+            <ul style="padding-left: 20px; list-style-type: disc;">
+              <li>📂 Sistema de almacenamiento: Se implementará un sistema gratuito basado en Google Sheets para almacenar la información.</li>
+              <li>🌐 Dominio gratuito: Se utilizará un dominio con prefijo gratuito, por ejemplo: yourpagename.github.io.</li>
+              <li>📧 Correo requerido: Se solicitará una cuenta de Gmail para gestionar la información y construir el sitio. Es esencial brindar acceso a esta cuenta.</li>
+              <li>💾 Espacio adicional: Si se requiere más almacenamiento, se recomienda adquirir espacio adicional en Google Drive de manera mensual.</li>
+              <li>📖 Guía de uso: Se proporcionará una explicación detallada sobre cómo las herramientas de Google Apps interactúan con el sitio web.</li>
+              <li>🎨 Diseño adaptable: Se creará un sitio web amigable y adaptado a tus necesidades. Se recomienda el uso de Bootstrap para un diseño moderno y responsivo.</li>
+          </ul>`;
+      precioFinal = 1500;
+  }
+  else if (responsive === "si" && dominio === "Gratuito" && db === "Gratuito") {
+      descripcion = `
+            <ul style="padding-left: 20px; list-style-type: disc;">
+              <li>📂 Sistema de almacenamiento: Se implementará un sistema gratuito basado en Google Sheets para almacenar la información.</li>
+              <li>🌐 Dominio gratuito: Se utilizará un dominio con prefijo gratuito, por ejemplo: yourpagename.github.io.</li>
+              <li>📧 Correo requerido: Se solicitará una cuenta de Gmail para gestionar la información y construir el sitio. Es esencial brindar acceso a esta cuenta.</li>
+              <li>💾 Espacio adicional: Si se requiere más almacenamiento, se recomienda adquirir espacio adicional en Google Drive de manera mensual.</li>
+              <li>📖 Guía de uso: Se proporcionará una explicación detallada sobre cómo las herramientas de Google Apps interactúan con el sitio web.</li>
+              <li>🎨 Diseño adaptable: Se creará un sitio web amigable y adaptado a tus necesidades.</li>
+          </ul>`;
+      precioFinal = 1850;
+  }
+  else if (responsive === "no" && dominio === "Gratuito" && db === "personalizado") {
+      descripcion = `
+          <ul style="padding-left: 20px; list-style-type: disc;">
+              <li>📂 Sistema de almacenamiento: Se implementará un sistema gratuito basado en Google Sheets para almacenar la información.</li>
+              <li>🌐 Dominio gratuito: Se utilizará un dominio con prefijo gratuito, por ejemplo: yourpagename.github.io.</li>
+              <li>📊 Base de datos personalizada según tus necesidades.</li>
+              <li>💾 Espacio adicional: Si se requiere más almacenamiento, se recomienda adquirir espacio adicional en Google Drive de manera mensual.</li>
+              <li>📖 Guía de uso: Se proporcionará una explicación detallada sobre cómo las herramientas de Google Apps interactúan con el sitio web.</li>
+              <li>🎨 Diseño adaptable: Se creará un sitio web amigable y adaptado a tus necesidades.</li>
+          </ul>`;
+      precioFinal = 2200;
+  }
+  else if (responsive === "no" && dominio === "personalizado" && db === "Gratuito") {
+      descripcion = `
+          <ul style="padding-left: 20px; list-style-type: disc;">
+              <li>📂 Sistema de almacenamiento: Se implementará un sistema gratuito basado en Google Sheets para almacenar la información.</li>
+              <li>🌐 Dominio y hosting por 1 año (la renovación anual no está incluida después del primer año).</li>
+              <li>📧 Correo requerido: Se solicitará una cuenta de Gmail para gestionar la información y construir el sitio. Es esencial brindar acceso a esta cuenta.</li>
+              <li>💾 Espacio adicional: Si se requiere más almacenamiento, se recomienda adquirir espacio adicional en Google Drive de manera mensual.</li>
+              <li>📖 Guía de uso: Se proporcionará una explicación detallada sobre cómo las herramientas de Google Apps interactúan con el sitio web.</li>
+              <li>🎨 Diseño adaptable: Se creará un sitio web amigable y adaptado a tus necesidades.</li>
+          </ul>`;
+      precioFinal = 2200;
     }
           }
 
@@ -406,56 +438,60 @@
             toastElement.show();
         }
 
-        // Inicializa EmailJS con tu User ID
-        emailjs.init("aNnTjgEp-VTuLpRIi"); // Reemplaza con tu User ID de EmailJS
 
-        function enviarCorreo() {
-            // Obtener los datos del formulario
-            let nombre = document.getElementById("nombre").value;
-            let correo = document.getElementById("correo").value;
-            let celular = document.getElementById("celular").value;
-            let presupuesto = document.getElementById("presupuesto").innerText;
-            let descripcion = document.getElementById("descripcion").innerHTML;
+    // Función para enviar el correo
+    function enviarCorreo() {
+        // Obtener los datos del formulario
+        let nombre = document.getElementById("nombre").value;
+        let correo = document.getElementById("correo").value;
+        let celular = document.getElementById("celular").value;
+        let presupuesto = document.getElementById("presupuesto").innerText; // O usa otro campo si lo tienes como input
+        let descripcionHTML = document.getElementById("descripcion").innerHTML; // O usa otro campo si es un input de texto
 
-            // Obtener las respuestas de las preguntas
-            let colores = document.getElementById("colores") ? document.getElementById("colores").value : "No especificado";
-            let tipoPagina = document.getElementById("tipoPagina") ? document.getElementById("tipoPagina").value : "No especificado";
-            let responsive = document.getElementById("responsive") ? document.getElementById("responsive").value : "No especificado";
-            let dominio = document.getElementById("dominio") ? document.getElementById("dominio").value : "No especificado";
-            let db = document.getElementById("db") ? document.getElementById("db").value : "No especificado";
+        // Extraer solo el texto de los elementos <li> dentro de <ul> usando una expresión regular
+        let descripcionTexto = descripcionHTML.replace(/<li[^>]*>(.*?)<\/li>/g, '$1').replace(/<ul[^>]*>/g, '').replace(/<\/ul>/g, '');
 
-            // Obtener la opción de contacto seleccionada
-            let contacto = [];
-            if (document.getElementById("whatsapp").checked) contacto.push("WhatsApp");
-            if (document.getElementById("llamada").checked) contacto.push("Llamada");
-            if (document.getElementById("correoContacto").checked) contacto.push("Correo");
+        let date = new Date().toLocaleDateString(); // Formato de fecha
 
-            // Crear un objeto con los datos a enviar
-            let datos = {
-                nombre: nombre,
-                correo: correo,
-                celular: celular,
-                presupuesto: presupuesto,
-                descripcion: descripcion,
-                colores: colores,
-                tipoPagina: tipoPagina,
-                responsive: responsive,
-                dominio: dominio,
-                db: db,
-                contacto: contacto.join(", ")
-            };
+        // Obtener las respuestas de las preguntas
+        let colores = document.getElementById("colores") ? document.getElementById("colores").value : "No especificado";
+        let tipoPagina = document.getElementById("tipoPagina") ? document.getElementById("tipoPagina").value : "No especificado";
+        let responsive = document.getElementById("responsive") ? document.getElementById("responsive").value : "No especificado";
+        let dominio = document.getElementById("dominio") ? document.getElementById("dominio").value : "No especificado";
+        let db = document.getElementById("db") ? document.getElementById("db").value : "No especificado";
 
-            // Enviar el correo usando EmailJS
-            emailjs.send("service_375bq4q", "template_09fz9qt", datos)
-                .then(function(response) {
-                    console.log("Correo enviado con éxito", response);
-                    alert("Correo enviado con éxito.");
-                }, function(error) {
-                    console.log("Error al enviar el correo", error);
-                    alert("Hubo un error al enviar el correo. Intenta nuevamente.");
-                });
-        }
+        // Obtener la opción de contacto seleccionada
+        let contacto = [];
+        if (document.getElementById("whatsapp").checked) contacto.push("WhatsApp");
+        if (document.getElementById("llamada").checked) contacto.push("Llamada");
+        if (document.getElementById("correoContacto").checked) contacto.push("Correo");
 
+        // Crear un objeto con los datos a enviar
+        let datos = {
+            date: date,
+            nombre: nombre,
+            correo: correo,
+            celular: celular,
+            presupuesto: presupuesto,
+            descripcion: descripcionTexto, // Enviar solo el texto de la descripción
+            colores: colores,
+            tipoPagina: tipoPagina,
+            responsive: responsive,
+            dominio: dominio,
+            db: db,
+            contacto: contacto.join(", ")
+        };
+
+        // Llamada a la API de EmailJS con los datos dinámicos
+        emailjs.send("default_service", "template_09fz9qt", datos)
+            .then(function(response) {
+                console.log("Correo enviado con éxito", response);
+                alert("Correo enviado con éxito.");
+            }, function(error) {
+                console.log("Error al enviar el correo", error);
+                alert("Hubo un error al enviar el correo. Intenta nuevamente.");
+            });
+    }
 
 
     </script>
