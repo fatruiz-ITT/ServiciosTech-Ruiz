@@ -13,7 +13,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script type="text/javascript"src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <script type="text/javascript">emailjs.init('aNnTjgEp-VTuLpRIi')</script>
 
     <style>
     body {
@@ -120,6 +119,13 @@
         font-size: 0.9rem;
         color: #ccc;
     }
+    .checkbox-container {
+        display: flex;
+        gap: 15px; /* Espaciado entre checkboxes */
+        flex-wrap: wrap; /* Permite que se ajusten si hay poco espacio */
+    }
+
+
 </style>
 </head>
 <body>
@@ -174,7 +180,7 @@
                             <option value="sistema">Sistema/POS</option>
                         </select>
                         <div id="opciones" class="mt-3"></div>
-                        <button class="btn btn-primary mt-3" onclick="calcularPresupuesto()">Calcular Presupuesto</button>
+                        <button class="btn btn-primary mt-3" onclick="calcularPresupuestoSegunTipo()">Calcular Presupuesto</button>
                     </div>
                 </div>
             </div>
@@ -190,6 +196,96 @@
             </div>
         </div>
     </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+      <div class="container">
+          <div class="row">
+              <div class="col-md-4">
+                  <h5>Servicios Tech Ruiz</h5>
+                  <p>Especializados en desarrollo de aplicaciones y páginas web para impulsar tu negocio.</p>
+              </div>
+              <div class="col-md-4">
+                  <h5>Enlaces Rápidos</h5>
+                  <ul>
+                      <li><a href="#portafolio">Portafolio</a></li>
+                      <li><a href="cotizacionapage">Cotización</a></li>
+                      <li><a href="#cotizacion" data-bs-toggle="modal" data-bs-target="#cotizacionModal">Contacto</a></li>
+                  </ul>
+              </div>
+              <div class="col-md-4">
+                  <h5>Redes Sociales</h5>
+                  <div class="social-icons">
+                      <a href="#"><i class="fab fa-facebook"></i></a>
+                      <a href="#"><i class="fab fa-twitter"></i></a>
+                      <a href="#"><i class="fab fa-instagram"></i></a>
+                      <a href="#"><i class="fab fa-linkedin"></i></a>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="footer-bottom">
+          <p>&copy; 2025 Servicios Tech Ruiz. Todos los derechos reservados.</p>
+      </div>
+  </footer>
+    <!-- Modal -->
+    <div class="modal fade" id="cotizacionModal" tabindex="-1" aria-labelledby="cotizacionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cotizacionModalLabel">Solicitar Cotización</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Formulario de cotización con el campo "Descripción de la necesidad" -->
+                    <form>
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="nombre" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="correo" class="form-label">Correo</label>
+                            <input type="email" class="form-control" id="correo" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="celular" class="form-label">Celular</label>
+                            <input type="text" class="form-control" id="celular" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Deseo ser contactado por:</label>
+                            <div class="checkbox-container">
+                            <div class="contact-options">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="whatsapp">
+                                    <label class="form-check-label" for="whatsapp"><i class="fab fa-whatsapp text-success"></i> WhatsApp</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="llamada">
+                                    <label class="form-check-label" for="llamada"><i class="fas fa-phone text-primary"></i> Llamada</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="correoContacto">
+                                    <label class="form-check-label" for="correoContacto"><i class="fas fa-envelope text-warning"></i> Correo</label>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                        <div class="mb-3">
+                            <label for="descripcionModal" class="form-label">Descripción de la necesidad</label>
+                            <textarea class="form-control" id="descripcionModal" rows="6" readonly></textarea>
+                        </div>
+
+                        <!-- Aquí se insertará la tabla con las respuestas -->
+                        <div id="tablaSolicitud"></div>
+
+                        <button type="button" class="btn btn-success" onclick="enviarcorreoseguntipo()">Enviar Solicitud por Correo</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal de Cotización -->
   <div class="modal fade" id="cotizacionModal" tabindex="-1" aria-labelledby="cotizacionModalLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -259,94 +355,20 @@
           </div>
       </div>
   </div>
-  <!-- Footer -->
-  <footer class="footer">
-      <div class="container">
-          <div class="row">
-              <div class="col-md-4">
-                  <h5>Servicios Tech Ruiz</h5>
-                  <p>Especializados en desarrollo de aplicaciones y páginas web para impulsar tu negocio.</p>
-              </div>
-              <div class="col-md-4">
-                  <h5>Enlaces Rápidos</h5>
-                  <ul>
-                      <li><a href="#portafolio">Portafolio</a></li>
-                      <li><a href="cotizacionapage">Cotización</a></li>
-                      <li><a href="#cotizacion" data-bs-toggle="modal" data-bs-target="#cotizacionModal">Contacto</a></li>
-                  </ul>
-              </div>
-              <div class="col-md-4">
-                  <h5>Redes Sociales</h5>
-                  <div class="social-icons">
-                      <a href="#"><i class="fab fa-facebook"></i></a>
-                      <a href="#"><i class="fab fa-twitter"></i></a>
-                      <a href="#"><i class="fab fa-instagram"></i></a>
-                      <a href="#"><i class="fab fa-linkedin"></i></a>
-                  </div>
-              </div>
-          </div>
-      </div>
-      <div class="footer-bottom">
-          <p>&copy; 2025 Servicios Tech Ruiz. Todos los derechos reservados.</p>
-      </div>
-  </footer>
-    <!-- Modal -->
-    <div class="modal fade" id="cotizacionModal" tabindex="-1" aria-labelledby="cotizacionModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="cotizacionModalLabel">Solicitar Cotización</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!-- Formulario de cotización con el campo "Descripción de la necesidad" -->
-                    <form>
-                        <div class="mb-3">
-                            <label for="nombre" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="correo" class="form-label">Correo</label>
-                            <input type="email" class="form-control" id="correo" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="celular" class="form-label">Celular</label>
-                            <input type="text" class="form-control" id="celular" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Deseo ser contactado por:</label>
-                            <div class="contact-options">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="whatsapp">
-                                    <label class="form-check-label" for="whatsapp"><i class="fab fa-whatsapp text-success"></i> WhatsApp</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="llamada">
-                                    <label class="form-check-label" for="llamada"><i class="fas fa-phone text-primary"></i> Llamada</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="correoContacto">
-                                    <label class="form-check-label" for="correoContacto"><i class="fas fa-envelope text-warning"></i> Correo</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="descripcionModal" class="form-label">Descripción de la necesidad</label>
-                            <textarea class="form-control" id="descripcionModal" rows="6" readonly></textarea>
-                        </div>
-
-                        <!-- Aquí se insertará la tabla con las respuestas -->
-                        <div id="tablaSolicitud"></div>
-
-                        <button type="button" class="btn btn-success" onclick="enviarCorreo()">Enviar Solicitud por Correo</button>
-
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <script>
+
+
+function calcularPresupuestoSegunTipo() {
+    let tipoServicio = document.getElementById("tipoServicio").value;
+    if (tipoServicio === "pagina") {
+        calcularPresupuesto();
+    } else if (tipoServicio === "android") {
+        calcularPresupuestoApp();
+    }
+}
+
+
     async function obtenerTipoCambio() {
         try {
             const response = await fetch("https://v6.exchangerate-api.com/v6/dded94d53c0f018721839339/latest/USD");
@@ -423,65 +445,141 @@
                     </div>
                 `;
             }
+          else  if (tipoServicio === "android") {
+                opcionesDiv.innerHTML = `
+                    <div class="mb-3">
+                        <label for="coloresandroid" class="form-label">
+                            <i class="bi bi-palette"></i> Cantidad de colores:
+                        </label>
+                        <input type="number" id="colores" class="form-control" min="1" max="5" placeholder="Ejemplo: 3" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="tipoApp" class="form-label">
+                            <i class="bi bi-globe"></i> Tipo de App:
+                        </label>
+                          <input type="text" id="tipoApp" class="form-control" placeholder="turismo, restaurante, Punto de venta etc..." required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="objetivoapp" class="form-label">
+                            <i class="bi bi-globe"></i>   ¿Cuál es el objetivo principal de la aplicación?:
+                        </label>
+                          <input type="text" id="objetivoapp" class="form-control" placeholder="Ej. un punto de ventas de cosmeticos" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">
+                            <i class="bi bi-globe2"></i> ¿Cuentas con un diseño o wireframe o necesitas ayuda con eso?
+                        </label>
+                        <select id="wireframe" class="form-select" required>
+                            <option value="">Selecciona una opción</option>
+                            <option value="Si">Si</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+                `;
+            }
         }
 
-        function cargarDatosModal() {
-            // Obtener los valores de presupuesto y descripción
-            let presupuesto = document.getElementById("presupuesto").innerText;
-            let descripcionHTML = document.getElementById("descripcion").innerHTML;
 
-            // Extraer solo el texto de los elementos <li> dentro de <ul> usando una expresión regular
-            let descripcionTexto = descripcionHTML.replace(/<li[^>]*>(.*?)<\/li>/g, '$1').replace(/<ul[^>]*>/g, '').replace(/<\/ul>/g, '');
+    function calcularPresupuestoSegunTipo() {
+        let tipoServicio = document.getElementById("tipoServicio").value;
+        if (tipoServicio === "pagina") {
+            calcularPresupuesto();
+        } else if (tipoServicio === "android") {
+            calcularPresupuestoApp();
+        }
+    }
+    function enviarcorreoseguntipo() {
+        let tipoServicio = document.getElementById("tipoServicio").value;
+        if (tipoServicio === "pagina") {
+            enviarCorreo();
+        } else if (tipoServicio === "android") {
+            enviarCorreoApp();
+        }
+    }
+    function cargarDatosModal() {
+        let tipoServicio = document.getElementById("tipoServicio").value;
+        if (tipoServicio === "pagina") {
+            calcularPresupuesto();
+        } else if (tipoServicio === "android") {
+            calcularPresupuestoApp();
+        }
 
-            // Colocar los valores en el campo "Descripción de la necesidad" en el modal
-            document.getElementById("descripcionModal").value = `
-                <strong>Presupuesto:</strong> ${presupuesto}\n\n
-                <strong>Características Incluidas:</strong>\n${descripcionTexto}
-            `;
+        let presupuesto = document.getElementById("presupuesto").innerText;
+        let descripcionHTML = document.getElementById("descripcion").innerHTML;
+        let descripcionTexto = descripcionHTML.replace(/<li[^>]*>(.*?)<\/li>/g, '$1').replace(/<ul[^>]*>/g, '').replace(/<\/ul>/g, '');
 
-            // Crear la tabla con las respuestas
-            let colores = document.getElementById("colores") ? document.getElementById("colores").value : "No especificado";
-            let tipoPagina = document.getElementById("tipoPagina") ? document.getElementById("tipoPagina").value : "No especificado";
-            let responsive = document.getElementById("responsive") ? document.getElementById("responsive").value : "No especificado";
-            let dominio = document.getElementById("dominio") ? document.getElementById("dominio").value : "No especificado";
-            let db = document.getElementById("db") ? document.getElementById("db").value : "No especificado";
+        document.getElementById("descripcionModal").value = `
+            <strong>Presupuesto:</strong> ${presupuesto}\n\n
+            <strong>Características Incluidas:</strong>\n${descripcionTexto}
+        `;
 
-            // Crear la tabla con las respuestas
-            let tablaDetalle = `
-                <table class="table table-striped table-responsive">
-                    <thead>
-                        <tr>
-                            <th>Pregunta</th>
-                            <th>Respuesta</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Cantidad de colores</strong></td>
-                            <td>${colores}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Tipo de página</strong></td>
-                            <td>${tipoPagina}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>¿Es responsive?</strong></td>
-                            <td>${responsive}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>¿Dominio personalizado?</strong></td>
-                            <td>${dominio}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Gestor de base de datos</strong></td>
-                            <td>${db}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            `;
+        let detalles = [
+            { pregunta: "Cantidad de colores", id: "colores" },
+            { pregunta: "Tipo de página", id: "tipoPagina" }
+        ];
 
-            // Insertar la tabla en el modal debajo del campo de descripción
-            document.getElementById("tablaSolicitud").innerHTML = tablaDetalle;
+        if (tipoServicio === "pagina") {
+            detalles.push({ pregunta: "¿Es responsive?", id: "responsive" });
+            detalles.push({ pregunta: "¿Dominio personalizado?", id: "dominio" });
+            detalles.push({ pregunta: "Gestor de base de datos", id: "db" });
+        }
+
+        if (tipoServicio === "android") {
+            detalles.push({ pregunta: "Objetivo de la app", id: "objetivoapp" });
+            detalles.push({ pregunta: "¿Tiene wireframe?", id: "wireframe" });
+        }
+
+        let tablaDetalle = `<table class="table table-striped table-responsive"><thead><tr><th>Pregunta</th><th>Respuesta</th></tr></thead><tbody>`;
+
+        detalles.forEach(detalle => {
+            let valor = document.getElementById(detalle.id) ? document.getElementById(detalle.id).value : "No especificado";
+            tablaDetalle += `<tr><td><strong>${detalle.pregunta}</strong></td><td>${valor}</td></tr>`;
+        });
+
+        tablaDetalle += `</tbody></table>`;
+        document.getElementById("tablaSolicitud").innerHTML = tablaDetalle;
+    }
+
+
+    async function calcularPresupuestoApp() {
+            let costoBase = 5000; // Precio base para una app
+            const tipoCambio = await obtenerTipoCambio();
+            let tipoServicio = document.getElementById("tipoServicio").value;
+            let descripcion = "";
+            let precioFinal = costoBase;
+
+            if (tipoServicio === "android") {
+                let tipoAplicacion = document.getElementById("tipoApp").value;
+                let objetivo = document.getElementById("objetivoapp").value;
+                let wireframe = document.getElementById("wireframe").value;
+
+                if (wireframe === "No") costoBase += 3000;
+
+                descripcion = `
+                    <ul style="padding-left: 20px; list-style-type: disc;">
+                        <li>📱 Aplicación para Android.</li>
+                        <li>🎯 Objetivo de la app: ${objetivo}.</li>
+                        <li>🛠️ Desarrollo basado en el tipo de aplicación: ${tipoAplicacion}.</li>
+                        ${wireframe === "No" ? "<li>📐 Diseño y wireframe personalizado.</li>" : ""}
+                        <li>🔧 Soporte y mantenimiento por 3 meses.</li>
+                        <li>🚀 Publicación en Google Play (si se desea es costro extra).</li>
+                    </ul>`;
+
+                precioFinal = costoBase;
+            }
+
+            let enDolares = (precioFinal / tipoCambio).toFixed(2);
+            document.getElementById("presupuesto").innerText = `$${precioFinal} MXN (${enDolares} USD)`;
+            document.getElementById("descripcion").innerHTML = descripcion;
+
+            // Ocultar y reducir la primera card
+            let cardServicio = document.getElementById("cardServicio");
+            cardServicio.classList.remove("card-expand");
+            cardServicio.classList.add("card-collapse");
+
+            // Mostrar la segunda card con la descripción
+            document.getElementById("descripcionCard").style.display = "block";
         }
 
 
@@ -636,7 +734,22 @@
 
 
     // Función para enviar el correo
-    function enviarCorreo() {
+    function enviarCorreo(cuenta = "cuenta2") { // Se establece cuenta1 como valor predeterminado
+        const apiKeys = {
+            cuenta1: "Ftw0hgNv7Jd4qjajk",  // API Key de la primera cuenta
+            cuenta2: "aNnTjgEp-VTuLpRIi"      // API Key de la segunda cuenta
+        };
+
+        // Verificar si la cuenta seleccionada es válida
+        if (!apiKeys[cuenta]) {
+            console.error("Cuenta no válida");
+            alert("Error: Cuenta no válida.");
+            return;
+        }
+
+        // Inicializar EmailJS con la API Key de la cuenta seleccionada
+        emailjs.init(apiKeys[cuenta]);
+
         // Obtener los datos del formulario
         let nombre = document.getElementById("nombre").value;
         let correo = document.getElementById("correo").value;
@@ -644,7 +757,7 @@
         let presupuesto = document.getElementById("presupuesto").innerText; // O usa otro campo si lo tienes como input
         let descripcionHTML = document.getElementById("descripcion").innerHTML; // O usa otro campo si es un input de texto
 
-        // Extraer solo el texto de los elementos <li> dentro de <ul> usando una expresión regular
+        // Extraer solo el texto de los elementos <li> dentro de <ul>
         let descripcionTexto = descripcionHTML.replace(/<li[^>]*>(.*?)<\/li>/g, '$1').replace(/<ul[^>]*>/g, '').replace(/<\/ul>/g, '');
 
         let date = new Date().toLocaleDateString(); // Formato de fecha
@@ -681,14 +794,81 @@
         // Llamada a la API de EmailJS con los datos dinámicos
         emailjs.send("default_service", "template_09fz9qt", datos)
             .then(function(response) {
-                console.log("Correo enviado con éxito", response);
-                alert("Correo enviado con éxito.");
+                console.log(`Correo enviado con éxito desde ${cuenta}`, response);
+                alert(`Correo enviado con éxito.`);
             }, function(error) {
-                console.log("Error al enviar el correo", error);
-                alert("Hubo un error al enviar el correo. Intenta nuevamente.");
+                console.log(`Error al enviar el correo desde ${cuenta}`, error);
+                alert(`Hubo un error al enviar el correo desde ${cuenta}. Intenta nuevamente.`);
             });
     }
 
+
+    // Función para enviar el correo
+    function enviarCorreoApp(cuenta = "cuenta1") { // Se establece cuenta1 como valor predeterminado
+        const apiKeys = {
+            cuenta1: "Ftw0hgNv7Jd4qjajk",  // API Key de la primera cuenta
+            cuenta2: "OtraApiKeyAqui"      // API Key de la segunda cuenta
+        };
+
+        // Verificar si la cuenta seleccionada es válida
+        if (!apiKeys[cuenta]) {
+            console.error("Cuenta no válida");
+            alert("Error: Cuenta no válida.");
+            return;
+        }
+
+        // Inicializar EmailJS con la API Key de la cuenta seleccionada
+        emailjs.init(apiKeys[cuenta]);
+
+        // Obtener los datos del formulario
+        let nombre = document.getElementById("nombre").value;
+        let correo = document.getElementById("correo").value;
+        let celular = document.getElementById("celular").value;
+        let presupuesto = document.getElementById("presupuesto").innerText;
+        let descripcionHTML = document.getElementById("descripcion").innerHTML;
+
+        // Extraer solo el texto de los elementos <li> dentro de <ul>
+        let descripcionTexto = descripcionHTML.replace(/<li[^>]*>(.*?)<\/li>/g, '$1').replace(/<ul[^>]*>/g, '').replace(/<\/ul>/g, '');
+
+        let date = new Date().toLocaleDateString();
+
+        // Obtener las respuestas de las preguntas
+        let colores = document.getElementById("colores") ? document.getElementById("colores").value : "No especificado";
+        let tipoPagina = document.getElementById("tipoApp") ? document.getElementById("tipoApp").value : "No especificado";
+        let responsive = document.getElementById("objetivoapp") ? document.getElementById("objetivoapp").value : "No especificado";
+        let dominio = document.getElementById("wireframe") ? document.getElementById("wireframe").value : "No especificado";
+
+        // Obtener la opción de contacto seleccionada
+        let contacto = [];
+        if (document.getElementById("whatsapp").checked) contacto.push("WhatsApp");
+        if (document.getElementById("llamada").checked) contacto.push("Llamada");
+        if (document.getElementById("correoContacto").checked) contacto.push("Correo");
+
+        // Crear un objeto con los datos a enviar
+        let datos = {
+            date: date,
+            nombre: nombre,
+            correo: correo,
+            celular: celular,
+            presupuesto: presupuesto,
+            descripcion: descripcionTexto,
+            colores: colores,
+            tipoApp: tipoPagina,
+            objetivoapp: responsive,
+            wireframe: dominio,
+            contacto: contacto.join(", ")
+        };
+
+        // Llamada a la API de EmailJS con los datos dinámicos
+        emailjs.send("default_service", "template_4ygcdbf", datos)
+            .then(function(response) {
+                console.log("Correo enviado con éxito desde la cuenta:", cuenta, response);
+                alert("Correo enviado con éxito");
+            }, function(error) {
+                console.log("Error al enviar el correo desde la cuenta:", cuenta, error);
+                alert("Hubo un error al enviar el correo desde la cuenta: " + cuenta);
+            });
+    }
 
     </script>
 </body>
