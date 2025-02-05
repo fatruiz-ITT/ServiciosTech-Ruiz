@@ -3,497 +3,413 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editor de Cotización</title>
+    <title>Servicios de Desarrollo - Apps y Web</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script type="text/javascript"src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script type="text/javascript">emailjs.init('aNnTjgEp-VTuLpRIi')</script>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body {
             background-color: #f8f9fa;
-            font-family: Arial, sans-serif;
-        }
-        .container {
-            max-width: 900px;
-            margin-top: 20px;
-        }
-        .card-custom {
-            background-color: #e9f4f9;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: width 0.5s ease;
-            width: 100%;
-        }
-        .card-shrink {
-            width: 48%;
-        }
-        .result {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #007bff;
-        }
-        .card-title {
-            color: #007bff;
-        }
-        .card-body p {
-            font-size: 14px;
+            font-family: 'Arial', sans-serif;
+            color: #333;
         }
         .header {
             background-color: #007bff;
             color: white;
-            padding: 20px;
+            padding: 80px 20px;
             text-align: center;
-            border-radius: 8px;
-            margin-bottom: 20px;
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            font-size: 3rem;
+            font-weight: bold;
+        }
+        .header p {
+            font-size: 1.25rem;
+            margin-top: 10px;
         }
         .service-card {
-            border-radius: 8px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
             background-color: white;
             margin-bottom: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .footer {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 14px;
-            color: gray;
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.2);
         }
-        .navbar {
+        .icon {
+            font-size: 3rem;
+            color: #007bff;
             margin-bottom: 20px;
         }
-        .contact-options {
-            display: flex;
-            justify-content: space-between;
+        .navbar {
+            background-color: #007bff !important;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+        }
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .navbar-nav .nav-link {
+            color: white !important;
+            font-size: 1.1rem;
+            margin-left: 20px;
+            transition: color 0.3s ease;
+        }
+        .navbar-nav .nav-link:hover {
+            color: #ffdd57 !important;
+        }
+        .carousel-item img {
+            border-radius: 10px;
+        }
+        .footer {
+            background-color: #2c3e50;
+            color: white;
+            padding: 60px 0;
+            margin-top: 80px;
+        }
+        .footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            color: #0056b3;
+        }
+        .footer h5 {
+            color: #fff;
+            margin-bottom: 20px;
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+        .footer ul {
+            list-style: none;
+            padding: 0;
+        }
+        .footer ul li {
+            margin-bottom: 10px;
+        }
+        .footer .social-icons a {
+            font-size: 1.5rem;
+            margin-right: 15px;
+            color: #fff;
+            transition: color 0.3s ease;
+        }
+        .footer .social-icons a:hover {
+            color: #007bff;
+        }
+        .footer-bottom {
+            background-color: #1a252f;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: 40px;
+        }
+        .footer-bottom p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #ccc;
         }
     </style>
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-      <div class="container">
-          <a class="navbar-brand" href="#">Servicios Tech</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-              <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-              <ul class="navbar-nav ms-auto">
-                  <li class="nav-item"><a class="nav-link" href="#portafolio">Portafolio</a></li>
-      <li class="nav-item"><a class="nav-link" href="cotizacionapage.html">Cotizacion</a></li>
-                  <li class="nav-item"><a class="nav-link" href="#cotizacion" data-bs-toggle="modal" data-bs-target="#cotizacionModal">Contacto</a></li>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Servicios Tech Ruiz</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#portafolio">Portafolio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="cotizacionapage">Cotización</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#cotizacion" data-bs-toggle="modal" data-bs-target="#cotizacionModal">Contacto</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-              </ul>
+    <!-- Header -->
+    <div class="header">
+        <h1>Desarrollo de Aplicaciones y Páginas Web</h1>
+        <p>Soluciones personalizadas para tu negocio</p>
+    </div>
+
+    <!-- Carrusel de Imágenes -->
+    <div class="container">
+        <div id="carouselExampleIndicators" class="carousel slide mb-5" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="https://via.placeholder.com/800x400?text=App+Development" class="d-block w-100" alt="App Development">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/800x400?text=Web+Development" class="d-block w-100" alt="Web Development">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/800x400?text=POS+Systems" class="d-block w-100" alt="POS Systems">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Servicios -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="service-card text-center">
+                    <div class="icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h4>Aplicaciones Android</h4>
+                    <p>Desarrollo de apps móviles adaptadas a tus necesidades.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="service-card text-center">
+                    <div class="icon"><i class="fas fa-globe"></i></div>
+                    <h4>Páginas Web</h4>
+                    <p>Diseño y desarrollo de sitios web modernos y responsivos.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="service-card text-center">
+                    <div class="icon"><i class="fas fa-cash-register"></i></div>
+                    <h4>Sistemas y POS</h4>
+                    <p>Software de gestión para negocios, incluyendo puntos de venta.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Servicios Tech Ruiz</h5>
+                    <p>Especializados en desarrollo de aplicaciones y páginas web para impulsar tu negocio.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Enlaces Rápidos</h5>
+                    <ul>
+                        <li><a href="index.html">Portafolio</a></li>
+                        <li><a href="cotizacionapage.html">Cotización</a></li>
+                        <li><a href="#cotizacion" data-bs-toggle="modal" data-bs-target="#cotizacionModal">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Redes Sociales</h5>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Servicios Tech Ruiz. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Modal de Cotización -->
+  <div class="modal fade" id="cotizacionModal" tabindex="-1" aria-labelledby="cotizacionModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="cotizacionModalLabel">Formulario de Contacto</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body">
+                  <form id="formCotizacion" onsubmit="return validarFormulario()">
+                      <div class="mb-3">
+                          <label for="nombre" class="form-label">Nombre</label>
+                          <input type="text" class="form-control" id="nombre" placeholder="Ej. Juan Pérez" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]+" title="Solo letras y espacios" required>
+                      </div>
+                      <div class="mb-3">
+                          <label for="correo" class="form-label">Correo</label>
+                          <input type="email" class="form-control" id="correo" placeholder="Ej. usuario@email.com" required>
+                      </div>
+                      <div class="mb-3">
+                          <label for="celular" class="form-label">Celular</label>
+                          <input type="tel" class="form-control" id="celular" placeholder="Ej. 5512345678" pattern="[0-9]{10}" title="Debe contener 10 dígitos numéricos" required>
+                      </div>
+                      <div class="mb-3">
+                          <label class="form-label">Deseo ser contactado por:</label>
+                          <div class="d-flex justify-content-between">
+                              <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" id="whatsapp">
+                                  <label class="form-check-label" for="whatsapp">
+                                      <i class="fab fa-whatsapp text-success"></i> WhatsApp
+                                  </label>
+                              </div>
+                              <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" id="llamada">
+                                  <label class="form-check-label" for="llamada">
+                                      <i class="fas fa-phone text-primary"></i> Llamada
+                                  </label>
+                              </div>
+                              <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" id="correoContacto">
+                                  <label class="form-check-label" for="correoContacto">
+                                      <i class="fas fa-envelope text-warning"></i> Correo
+                                  </label>
+                              </div>
+                          </div>
+                          <div id="errorCheckboxes" class="text-danger mt-2" style="display: none;">
+                              Debe seleccionar al menos un método de contacto.
+                          </div>
+                      </div>
+                      <div class="mb-3">
+                          <label for="servicio" class="form-label">Requiero:</label>
+                          <select class="form-select" id="servicio" required>
+                              <option value="" disabled selected>Seleccione una opción</option>
+                              <option value="android">Aplicación Android</option>
+                              <option value="web">Página Web</option>
+                              <option value="pos">Sistema y POS</option>
+                          </select>
+                      </div>
+                      <div class="mb-3">
+                          <label for="descripcion" class="form-label">Algún mensaje que anexar? (Opcional)</label>
+                          <textarea class="form-control" id="descripcion" rows="3" placeholder="Detalles adicionales..."></textarea>
+                      </div>
+                      <button type="submit" class="btn btn-primary w-100">
+                          <i class="fas fa-paper-plane"></i> Enviar
+                      </button>
+                  </form>
+              </div>
           </div>
       </div>
-  </nav>
-  <!-- Toast Notification -->
-<div class="toast-container position-fixed top-0 end-0 p-3">
-    <div id="toastNotification" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header">
-            <strong class="me-auto">Notificación</strong>
-            <small>Ahora</small>
-            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-        <div class="toast-body" id="toastMessage">
-            El correo ha sido enviado con éxito.
-        </div>
-    </div>
-</div>
+  </div>
 
-    <div class="container">
-        <h1 class="text-center">Editor de Cotización</h1>
-        <div class="row d-flex justify-content-center">
-            <div class="col-md-6" id="cardContainer">
-                <div class="card card-custom" id="cardServicio">
-                    <div class="card-body">
-                        <h5 class="card-title">Seleccione el tipo de servicio</h5>
-                        <label for="tipoServicio" class="form-label">Tipo de Servicio:</label>
-                        <select id="tipoServicio" class="form-select" onchange="generarOpciones()">
-                            <option value="">Seleccione una opción</option>
-                            <option value="pagina">Página Web</option>
-                            <option value="android">Aplicación Android</option>
-                            <option value="sistema">Sistema/POS</option>
-                        </select>
-                        <div id="opciones" class="mt-3"></div>
-                        <button class="btn btn-primary mt-3" onclick="calcularPresupuesto()">Calcular Presupuesto</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6" id="descripcionCard" style="display: none;">
-                <div class="card card-custom">
-                    <div class="card-body">
-                        <h5 class="card-title">Características Incluidas</h5>
-                        <p class="result mt-3" id="presupuesto"></p>
-                        <p id="descripcion"></p>
-                        <button class="btn btn-primary mt-3" href="#cotizacion" data-bs-toggle="modal" data-bs-target="#cotizacionModal" onclick="cargarDatosModal()">Reservar Esta Cotizacion</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+  <script>
+      function validarFormulario() {
+          let checkboxes = document.querySelectorAll('input[type="checkbox"]');
+          let errorCheckboxes = document.getElementById("errorCheckboxes");
+          let alMenosUnoSeleccionado = Array.from(checkboxes).some(checkbox => checkbox.checked);
 
-    <!-- Modal -->
-    <div class="modal fade" id="cotizacionModal" tabindex="-1" aria-labelledby="cotizacionModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="cotizacionModalLabel">Solicitar Cotización</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!-- Formulario de cotización con el campo "Descripción de la necesidad" -->
-                    <form>
-                        <div class="mb-3">
-                            <label for="nombre" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="correo" class="form-label">Correo</label>
-                            <input type="email" class="form-control" id="correo" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="celular" class="form-label">Celular</label>
-                            <input type="text" class="form-control" id="celular" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Deseo ser contactado por:</label>
-                            <div class="contact-options">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="whatsapp">
-                                    <label class="form-check-label" for="whatsapp"><i class="fab fa-whatsapp text-success"></i> WhatsApp</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="llamada">
-                                    <label class="form-check-label" for="llamada"><i class="fas fa-phone text-primary"></i> Llamada</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="correoContacto">
-                                    <label class="form-check-label" for="correoContacto"><i class="fas fa-envelope text-warning"></i> Correo</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="descripcionModal" class="form-label">Descripción de la necesidad</label>
-                            <textarea class="form-control" id="descripcionModal" rows="6" readonly></textarea>
-                        </div>
-
-                        <!-- Aquí se insertará la tabla con las respuestas -->
-                        <div id="tablaSolicitud"></div>
-
-                        <button type="button" class="btn btn-success" onclick="enviarCorreo()">Enviar Solicitud por Correo</button>
-
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        function obtenerTipoCambio() {
-            return 17.5; // Simulación, se puede mejorar con una API real
-        }
-
-        function generarOpciones() {
-            let tipoServicio = document.getElementById("tipoServicio").value;
-            let opcionesDiv = document.getElementById("opciones");
-            opcionesDiv.innerHTML = "";
-
-            if (tipoServicio === "pagina") {
-                opcionesDiv.innerHTML = `
-                    <label for="colores" class="form-label">Cantidad de colores:</label>
-                    <input type="number" id="colores" class="form-control" min="1" max="5" value="1">
-
-                    <label for="tipoPagina" class="form-label">Tipo de página:</label>
-                    <input type="text" id="tipoPagina" class="form-control">
-
-                    <label class="form-label">¿Desea que sea Responsive?</label>
-                    <select id="responsive" class="form-select">
-                        <option value="si">Sí</option>
-                        <option value="no">No</option>
-                    </select>
-
-                    <label class="form-label">¿Dominio personalizado?</label>
-                    <select id="dominio" class="form-select">
-                        <option value="Gratuito">Gratuito</option>
-                        <option value="personalizado">Sí</option>
-                    </select>
-
-                    <label class="form-label">Gestor de base de datos:</label>
-                    <select id="db" class="form-select">
-                        <option value="Gratuito">Gratuito</option>
-                        <option value="personalizado">Sí</option>
-                    </select>
-                `;
-            }
-        }
-        function cargarDatosModal() {
-            // Obtener los valores de presupuesto y descripción
-            let presupuesto = document.getElementById("presupuesto").innerText;
-            let descripcionHTML = document.getElementById("descripcion").innerHTML;
-
-            // Extraer solo el texto de los elementos <li> dentro de <ul> usando una expresión regular
-            let descripcionTexto = descripcionHTML.replace(/<li[^>]*>(.*?)<\/li>/g, '$1').replace(/<ul[^>]*>/g, '').replace(/<\/ul>/g, '');
-
-            // Colocar los valores en el campo "Descripción de la necesidad" en el modal
-            document.getElementById("descripcionModal").value = `
-                <strong>Presupuesto:</strong> ${presupuesto}\n\n
-                <strong>Características Incluidas:</strong>\n${descripcionTexto}
-            `;
-
-            // Crear la tabla con las respuestas
-            let colores = document.getElementById("colores") ? document.getElementById("colores").value : "No especificado";
-            let tipoPagina = document.getElementById("tipoPagina") ? document.getElementById("tipoPagina").value : "No especificado";
-            let responsive = document.getElementById("responsive") ? document.getElementById("responsive").value : "No especificado";
-            let dominio = document.getElementById("dominio") ? document.getElementById("dominio").value : "No especificado";
-            let db = document.getElementById("db") ? document.getElementById("db").value : "No especificado";
-
-            // Crear la tabla con las respuestas
-            let tablaDetalle = `
-                <table class="table table-striped table-responsive">
-                    <thead>
-                        <tr>
-                            <th>Pregunta</th>
-                            <th>Respuesta</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Cantidad de colores</strong></td>
-                            <td>${colores}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Tipo de página</strong></td>
-                            <td>${tipoPagina}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>¿Es responsive?</strong></td>
-                            <td>${responsive}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>¿Dominio personalizado?</strong></td>
-                            <td>${dominio}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Gestor de base de datos</strong></td>
-                            <td>${db}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            `;
-
-            // Insertar la tabla en el modal debajo del campo de descripción
-            document.getElementById("tablaSolicitud").innerHTML = tablaDetalle;
-        }
-
-
-        function calcularPresupuesto() {
-            let costo = 5000;
-            const tipoCambio = obtenerTipoCambio();
-            let tipoServicio = document.getElementById("tipoServicio").value;
-            let descripcion = "";
-            let precioFinal = costo;
-
-            if (tipoServicio === "pagina") {
-                let responsive = document.getElementById("responsive").value;
-                let dominio = document.getElementById("dominio").value;
-                let db = document.getElementById("db").value;
-
-                if (responsive === "si") costo += 2000;
-                if (dominio === "personalizado") costo += 1500;
-                if (db === "personalizado") costo += 3000;
-
-                if (responsive === "si" && dominio === "personalizado" && db === "personalizado") {
-      descripcion = `
-        <ul style="padding-left: 20px; list-style-type: disc;">
-              <li>✅ Mantenimiento de la página por 3 meses sin costo adicional.</li>
-              <li>🌐 Dominio y hosting por 1 año (la renovación anual no está incluida después del primer año).</li>
-              <li>🔑 Acceso completo a tus datos de hosting y dominio.</li>
-              <li>📊 Base de datos personalizada según tus necesidades.</li>
-              <li>🎨 Diseño web con las características seleccionadas.</li>
-              <li>💰 Descuento en futuras actualizaciones si son requeridas.</li>
-          </ul>`;
-      precioFinal = 6500;
-  }
-
-                  else  if (responsive === "no" && dominio === "personalizado" && db === "personalizado") {
-                        descripcion = `
-  <ul style="padding-left: 20px; list-style-type: disc;">
-                      <li>✅ Mantenimiento de la página por 3 meses sin costo adicional.</li>
-    <li>🌐 Dominio y hosting por 1 año (la renovación anual no está incluida después del primer año).</li>
-    <li>🔑 Acceso completo a tus datos de hosting y dominio.</li>
-    <li>📊 Base de datos personalizada según tus necesidades.</li>
-    <li>🎨 Diseño adaptable: Se creará un sitio web amigable y adaptado a tus necesidades. Se recomienda el uso de Bootstrap para un diseño moderno y responsivo.</li>
-    <li>💰 Descuento en futuras actualizaciones si son requeridas.</li>
-    </ul>`;
-
-                  precioFinal = 5000;
-                }
-                else if (responsive === "si" && dominio === "personalizado" && db === "Gratuito") {
-      descripcion = `
-        <ul style="padding-left: 20px; list-style-type: disc;">
-              <li>✅ Mantenimiento de la página por 3 meses sin costo adicional.</li>
-              <li>🌐 Dominio y hosting por 1 año (la renovación anual no está incluida después del primer año).</li>
-              <li>🔑 Acceso completo a datos.</li>
-              <li>📊 Base de datos con Correo requerido: Se solicitará una cuenta de Gmail para gestionar la información y construir el sitio. Es esencial brindar acceso a esta cuenta.</li>
-              <li>🎨 Diseño web con características seleccionadas.</li>
-              <li>💰 Descuento en futuras actualizaciones.</li>
-          </ul>`;
-      precioFinal = 5000;
-  }
-  else if (responsive === "si" && dominio === "Gratuito" && db === "personalizado") {
-      descripcion = `
-            <ul style="padding-left: 20px; list-style-type: disc;">
-              <li>✅ Mantenimiento de la página por 3 meses sin costo adicional.</li>
-              <li>🌐 Dominio gratuito: Se utilizará un dominio con prefijo gratuito, por ejemplo: yourpagename.github.io.</li>
-              <li>🔑 Acceso completo a datos.</li>
-              <li>📊 Base de datos con Correo requerido: Se solicitará una cuenta de Gmail para gestionar la información y construir el sitio. Es esencial brindar acceso a esta cuenta.</li>
-              <li>🎨 Diseño web con características seleccionadas.</li>
-              <li>💰 Descuento en futuras actualizaciones.</li>
-          </ul>`;
-      precioFinal = 5000;
-  }
-  else if (responsive === "no" && dominio === "Gratuito" && db === "Gratuito") {
-      descripcion = `
-            <ul style="padding-left: 20px; list-style-type: disc;">
-              <li>📂 Sistema de almacenamiento: Se implementará un sistema gratuito basado en Google Sheets para almacenar la información.</li>
-              <li>🌐 Dominio gratuito: Se utilizará un dominio con prefijo gratuito, por ejemplo: yourpagename.github.io.</li>
-              <li>📧 Correo requerido: Se solicitará una cuenta de Gmail para gestionar la información y construir el sitio. Es esencial brindar acceso a esta cuenta.</li>
-              <li>💾 Espacio adicional: Si se requiere más almacenamiento, se recomienda adquirir espacio adicional en Google Drive de manera mensual.</li>
-              <li>📖 Guía de uso: Se proporcionará una explicación detallada sobre cómo las herramientas de Google Apps interactúan con el sitio web.</li>
-              <li>🎨 Diseño adaptable: Se creará un sitio web amigable y adaptado a tus necesidades. Se recomienda el uso de Bootstrap para un diseño moderno y responsivo.</li>
-          </ul>`;
-      precioFinal = 1500;
-  }
-  else if (responsive === "si" && dominio === "Gratuito" && db === "Gratuito") {
-      descripcion = `
-            <ul style="padding-left: 20px; list-style-type: disc;">
-              <li>📂 Sistema de almacenamiento: Se implementará un sistema gratuito basado en Google Sheets para almacenar la información.</li>
-              <li>🌐 Dominio gratuito: Se utilizará un dominio con prefijo gratuito, por ejemplo: yourpagename.github.io.</li>
-              <li>📧 Correo requerido: Se solicitará una cuenta de Gmail para gestionar la información y construir el sitio. Es esencial brindar acceso a esta cuenta.</li>
-              <li>💾 Espacio adicional: Si se requiere más almacenamiento, se recomienda adquirir espacio adicional en Google Drive de manera mensual.</li>
-              <li>📖 Guía de uso: Se proporcionará una explicación detallada sobre cómo las herramientas de Google Apps interactúan con el sitio web.</li>
-              <li>🎨 Diseño adaptable: Se creará un sitio web amigable y adaptado a tus necesidades.</li>
-          </ul>`;
-      precioFinal = 1850;
-  }
-  else if (responsive === "no" && dominio === "Gratuito" && db === "personalizado") {
-      descripcion = `
-          <ul style="padding-left: 20px; list-style-type: disc;">
-              <li>📂 Sistema de almacenamiento: Se implementará un sistema gratuito basado en Google Sheets para almacenar la información.</li>
-              <li>🌐 Dominio gratuito: Se utilizará un dominio con prefijo gratuito, por ejemplo: yourpagename.github.io.</li>
-              <li>📊 Base de datos personalizada según tus necesidades.</li>
-              <li>💾 Espacio adicional: Si se requiere más almacenamiento, se recomienda adquirir espacio adicional en Google Drive de manera mensual.</li>
-              <li>📖 Guía de uso: Se proporcionará una explicación detallada sobre cómo las herramientas de Google Apps interactúan con el sitio web.</li>
-              <li>🎨 Diseño adaptable: Se creará un sitio web amigable y adaptado a tus necesidades.</li>
-          </ul>`;
-      precioFinal = 2200;
-  }
-  else if (responsive === "no" && dominio === "personalizado" && db === "Gratuito") {
-      descripcion = `
-          <ul style="padding-left: 20px; list-style-type: disc;">
-              <li>📂 Sistema de almacenamiento: Se implementará un sistema gratuito basado en Google Sheets para almacenar la información.</li>
-              <li>🌐 Dominio y hosting por 1 año (la renovación anual no está incluida después del primer año).</li>
-              <li>📧 Correo requerido: Se solicitará una cuenta de Gmail para gestionar la información y construir el sitio. Es esencial brindar acceso a esta cuenta.</li>
-              <li>💾 Espacio adicional: Si se requiere más almacenamiento, se recomienda adquirir espacio adicional en Google Drive de manera mensual.</li>
-              <li>📖 Guía de uso: Se proporcionará una explicación detallada sobre cómo las herramientas de Google Apps interactúan con el sitio web.</li>
-              <li>🎨 Diseño adaptable: Se creará un sitio web amigable y adaptado a tus necesidades.</li>
-          </ul>`;
-      precioFinal = 2200;
-    }
+          if (!alMenosUnoSeleccionado) {
+              errorCheckboxes.style.display = "block";
+              return false;
+          } else {
+              errorCheckboxes.style.display = "none";
           }
 
-            let enDolares = (precioFinal / tipoCambio).toFixed(2);
-            document.getElementById("presupuesto").innerText = `$${precioFinal} MXN (${enDolares} USD)`;
-            document.getElementById("descripcion").innerHTML = descripcion;
+          return true;
+      }
+<script>
+    (function() {
+        emailjs.init("TU_USER_ID"); // Reemplaza con tu User ID de EmailJS
+    })();
 
-            // Ocultar y reducir la primera card
-            let cardServicio = document.getElementById("cardServicio");
-            cardServicio.classList.remove("card-expand");
-            cardServicio.classList.add("card-collapse");
+    document.getElementById("formCotizacion").addEventListener("submit", function(event) {
+        event.preventDefault(); // Evita que el formulario se envíe de forma tradicional
 
-            // Mostrar la segunda card con la descripción
-            document.getElementById("descripcionCard").style.display = "block";
+        let checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        let alMenosUnoSeleccionado = Array.from(checkboxes).some(checkbox => checkbox.checked);
+
+        if (!alMenosUnoSeleccionado) {
+            document.getElementById("errorCheckboxes").style.display = "block";
+            return;
+        } else {
+            document.getElementById("errorCheckboxes").style.display = "none";
         }
 
-
-        function mostrarNotificacion(mensaje, tipo) {
-            let toastMessage = document.getElementById("toastMessage");
-            toastMessage.innerHTML = mensaje;
-
-            // Cambiar el color de fondo según el tipo de mensaje
-            let toast = document.getElementById("toastNotification");
-            if (tipo === "success") {
-                toast.classList.add("bg-success");
-                toast.classList.remove("bg-danger");
-            } else {
-                toast.classList.add("bg-danger");
-                toast.classList.remove("bg-success");
-            }
-
-            // Mostrar el toast
-            let toastElement = new bootstrap.Toast(toast);
-            toastElement.show();
-        }
-
-
-    // Función para enviar el correo
-    function enviarCorreo() {
-        // Obtener los datos del formulario
+        // Capturar datos del formulario
         let nombre = document.getElementById("nombre").value;
         let correo = document.getElementById("correo").value;
         let celular = document.getElementById("celular").value;
-        let presupuesto = document.getElementById("presupuesto").innerText; // O usa otro campo si lo tienes como input
-        let descripcionHTML = document.getElementById("descripcion").innerHTML; // O usa otro campo si es un input de texto
+        let servicio = document.getElementById("servicio").value;
+        let descripcion = document.getElementById("descripcion").value || "Sin mensaje adicional";
 
-        // Extraer solo el texto de los elementos <li> dentro de <ul> usando una expresión regular
-        let descripcionTexto = descripcionHTML.replace(/<li[^>]*>(.*?)<\/li>/g, '$1').replace(/<ul[^>]*>/g, '').replace(/<\/ul>/g, '');
+        let contactoPreferido = [];
+        if (document.getElementById("whatsapp").checked) contactoPreferido.push("WhatsApp");
+        if (document.getElementById("llamada").checked) contactoPreferido.push("Llamada");
+        if (document.getElementById("correoContacto").checked) contactoPreferido.push("Correo");
 
-        let date = new Date().toLocaleDateString(); // Formato de fecha
-
-        // Obtener las respuestas de las preguntas
-        let colores = document.getElementById("colores") ? document.getElementById("colores").value : "No especificado";
-        let tipoPagina = document.getElementById("tipoPagina") ? document.getElementById("tipoPagina").value : "No especificado";
-        let responsive = document.getElementById("responsive") ? document.getElementById("responsive").value : "No especificado";
-        let dominio = document.getElementById("dominio") ? document.getElementById("dominio").value : "No especificado";
-        let db = document.getElementById("db") ? document.getElementById("db").value : "No especificado";
-
-        // Obtener la opción de contacto seleccionada
-        let contacto = [];
-        if (document.getElementById("whatsapp").checked) contacto.push("WhatsApp");
-        if (document.getElementById("llamada").checked) contacto.push("Llamada");
-        if (document.getElementById("correoContacto").checked) contacto.push("Correo");
-
-        // Crear un objeto con los datos a enviar
-        let datos = {
-            date: date,
+        let templateParams = {
             nombre: nombre,
             correo: correo,
             celular: celular,
-            presupuesto: presupuesto,
-            descripcion: descripcionTexto, // Enviar solo el texto de la descripción
-            colores: colores,
-            tipoPagina: tipoPagina,
-            responsive: responsive,
-            dominio: dominio,
-            db: db,
-            contacto: contacto.join(", ")
+            contacto: contactoPreferido.join(", "), // Convertir array a string
+            servicio: servicio,
+            descripcion: descripcion
         };
 
-        // Llamada a la API de EmailJS con los datos dinámicos
-        emailjs.send("default_service", "template_09fz9qt", datos)
+        // Enviar con EmailJS
+        emailjs.send("TU_SERVICE_ID", "TU_TEMPLATE_ID", templateParams)
             .then(function(response) {
-                console.log("Correo enviado con éxito", response);
-                alert("Correo enviado con éxito.");
+                alert("Solicitud enviada con éxito.");
+                document.getElementById("formCotizacion").reset(); // Limpiar formulario
             }, function(error) {
-                console.log("Error al enviar el correo", error);
-                alert("Hubo un error al enviar el correo. Intenta nuevamente.");
+                alert("Error al enviar la solicitud, intenta nuevamente.");
+                console.error("Error:", error);
             });
-    }
+    });
+  </script>
+  <script>
+      document.getElementById("formCotizacion").addEventListener("submit", function(event) {
+          event.preventDefault(); // Evita que el formulario se envíe de forma tradicional
 
+          let checkboxes = document.querySelectorAll('input[type="checkbox"]');
+          let alMenosUnoSeleccionado = Array.from(checkboxes).some(checkbox => checkbox.checked);
 
-    </script>
+          if (!alMenosUnoSeleccionado) {
+              document.getElementById("errorCheckboxes").style.display = "block";
+              return;
+          } else {
+              document.getElementById("errorCheckboxes").style.display = "none";
+          }
+
+          // Capturar datos del formulario
+          let nombre = document.getElementById("nombre").value;
+          let correo = document.getElementById("correo").value;
+          let celular = document.getElementById("celular").value;
+          let servicio = document.getElementById("servicio").value;
+          let descripcion = document.getElementById("descripcion").value || "Sin mensaje adicional";
+
+          let contactoPreferido = [];
+          if (document.getElementById("whatsapp").checked) contactoPreferido.push("WhatsApp");
+          if (document.getElementById("llamada").checked) contactoPreferido.push("Llamada");
+          if (document.getElementById("correoContacto").checked) contactoPreferido.push("Correo");
+
+          let templateParams = {
+              nombre: nombre,
+              correo: correo,
+              celular: celular,
+              contacto: contactoPreferido.join(", "), // Convertir array a string
+              servicio: servicio,
+              descripcion: descripcion
+          };
+
+          // Enviar con EmailJS
+          emailjs.send("default_service", "template_zdm6ytp", templateParams)
+              .then(function(response) {
+                  alert("Mensaje enviada con éxito, Pronto seras contactado");
+                  document.getElementById("formCotizacion").reset(); // Limpiar formulario
+              }, function(error) {
+                  alert("Error al enviar la solicitud, intenta nuevamente.");
+                  console.error("Error:", error);
+              });
+      });
+  </script>
+
 </body>
 </html>
